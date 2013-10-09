@@ -1,5 +1,6 @@
 #!/bin/bash
 
+## Original script 'chrome-ssb.sh' from https://github.com/lhl/chrome-ssb-osx
 
 # White Space Trimming: http://codesnippets.joyent.com/posts/show/1816
 trim() {
@@ -11,17 +12,27 @@ trim() {
 
 
 ### Get Input
-/bin/echo "What should the Application be called?"
-read inputline
-name=`trim "$inputline"`
+## We'll have Automator return arguments in the order they're prompted
+# /bin/echo "What should the Application be called?"
+# read inputline
+name=`trim "$1"`
+# 
+# /bin/echo "What is the url (e.g. https://www.google.com/calendar/render)?"
+# read inputline
+url=`trim "$2"`
+# 
+# /bin/echo "What is the full path to the icon (e.g. /Users/username/Desktop/icon.png)?"
+# read inputline
+icon=`trim "$3"`
 
-/bin/echo "What is the url (e.g. https://www.google.com/calendar/render)?"
-read inputline
-url=`trim "$inputline"`
-
-/bin/echo "What is the full path to the icon (e.g. /Users/username/Desktop/icon.png)?"
-read inputline
-icon=`trim "$inputline"`
+# Ask user if they want desktop, tablet or mobile version of the site
+# if [ "$4" == "3" ] ; then
+# 	agent=`--use-mobile-user-agent`
+# else if [ "$4" == "4" ] ; then
+# 	agent=`--enable-request-tablet-site`
+# else
+# 	agent=``
+# fi			
 
 
 #### Find Chrome. If its not in the standard spot, try using spotlight.
@@ -36,7 +47,9 @@ fi
 chromeExecPath="$chromePath/Contents/MacOS/Google Chrome"
 
 # Let's make the app whereever we call the script from...
-appRoot=`/bin/pwd`
+# appRoot=`/bin/pwd`
+# Nah, let's put it on the desktop 
+appRoot=`~/Desktop`
 
 # various paths used when creating the app
 resourcePath="$appRoot/$name.app/Contents/Resources"

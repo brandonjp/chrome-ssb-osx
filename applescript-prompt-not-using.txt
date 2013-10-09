@@ -1,0 +1,22 @@
+on run {input, parameters}
+	set siteVersions to {"Default", "Desktop", "Mobile", "Tablet"}
+	set promptTitle to "Site Version"
+	set promptText to "Choose which version of the site you want (if applicable, some sites don't offer all these)"
+	set okButtonText to "NEXT >"
+	
+	set selectedVersion to choose from list siteVersions with title promptTitle with prompt promptText OK button name okButtonText default items {"Default"}
+	
+	return indexof(selectedVersion, siteVersions) as number
+end run
+
+on indexof(theItem, theList) -- credits Emmanuel Levy
+	set oTIDs to AppleScript's text item delimiters
+	set AppleScript's text item delimiters to return
+	set theList to return & theList & return
+	set AppleScript's text item delimiters to oTIDs
+	try
+		-1 + (count (paragraphs of (text 1 thru (offset of (return & theItem & return) in theList) of theList)))
+	on error
+		0
+	end try
+end indexof
